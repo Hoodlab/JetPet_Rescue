@@ -10,54 +10,41 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import hoods.com.jetpetrescue.detail.DetailScreen
-import hoods.com.jetpetrescue.home.Home
-import hoods.com.jetpetrescue.ui.theme.JetPetTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import hoods.com.jetpetrescue.presentation.detail.DetailScreen
+import hoods.com.jetpetrescue.presentation.home.HomeScreen
+import hoods.com.jetpetrescue.presentation.navigation.JetPetNavigation
+import hoods.com.jetpetrescue.presentation.ui.theme.JetPetRescueTheme
+import hoods.com.jetpetrescue.presentation.viemodels.MainViewModel
 
-enum class Screen {
-    Home,
-    Detail
-}
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var isDarkTheme by remember {
+            val vieModel = viewModel(modelClass = MainViewModel::class.java)
+            var isDark by remember {
                 mutableStateOf(false)
             }
-            var currentScreen by remember {
-                mutableStateOf(Screen.Home)
-            }
-            var selectedIndex by remember {
+            var id by remember {
                 mutableStateOf(-1)
             }
-
-
-            JetPetTheme(
-                darkTheme = isDarkTheme
-            ) {
+            val navController = rememberNavController()
+            JetPetRescueTheme(isDark) {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {
-                    when (currentScreen) {
-                        Screen.Home -> {
-                            Home(
-                                onSwitchClick = { isDarkTheme =!isDarkTheme },
-                                onPetClick = { index ->
-                                    currentScreen = Screen.Detail
-                                    selectedIndex = index
-                                },
-                            )
-                        }
-                        Screen.Detail -> {
-                            DetailScreen(index = selectedIndex) {
-                                currentScreen = Screen.Home
-                            }
-                        }
-
-                    }
-
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                   JetPetNavigation(
+                       navController = navController,
+                       uistate = vieModel.uiState,
+                       onThemeChange = {isDark = !isDark},
+                       onLoadNextPage = vieModel::loadNextPetsPage,
+                       onInfiniteScrollChange = vieModel::onInfiniteScrollChange
+                   )
                 }
             }
         }
@@ -72,7 +59,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    JetPetTheme {
+    JetPetRescueTheme {
         Greeting("Android")
     }
 }
