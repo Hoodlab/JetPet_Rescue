@@ -1,5 +1,7 @@
 package hoods.com.jetpetrescue
 
+import DetailScreen
+import Home
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,8 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import hoods.com.jetpetrescue.detail.DetailScreen
-import hoods.com.jetpetrescue.home.Home
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
 
 enum class Screen {
