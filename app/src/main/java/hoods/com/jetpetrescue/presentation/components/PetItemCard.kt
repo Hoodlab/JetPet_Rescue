@@ -1,7 +1,5 @@
 package hoods.com.jetpetrescue.presentation.components
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,12 +21,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import hoods.com.jetpetrescue.R
 import hoods.com.jetpetrescue.domain.models.Pet
-import hoods.com.jetpetrescue.presentation.ui.theme.JetPetRescueTheme
 
 @Composable
 fun PetItemCard(pet: Pet, onPetItemClicked: (Pet) -> Unit) {
